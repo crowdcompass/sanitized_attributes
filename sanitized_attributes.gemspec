@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sanitized_attributes}
-  s.version = "1.1.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Boeh", "CrowdCompass, Inc."]
@@ -16,10 +16,27 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README.rdoc"
   ]
+  s.files = [
+    ".document",
+    "LICENSE",
+    "README.rdoc",
+    "Rakefile",
+    "VERSION",
+    "lib/sanitized_attributes.rb",
+    "lib/sanitized_attributes/sanitized_attribute.rb",
+    "sanitized_attributes.gemspec",
+    "spec/sanitized_attributes_spec.rb",
+    "spec/spec.opts",
+    "spec/spec_helper.rb"
+  ]
   s.homepage = %q{http://github.com/mboeh/sanitized_attributes}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{HTML-sanitizing attribute accessors for Ruby and Rails}
+  s.test_files = [
+    "spec/sanitized_attributes_spec.rb",
+    "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
