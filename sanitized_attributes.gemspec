@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sanitized_attributes}
-  s.version = "1.2.1"
+  s.version = "1.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Boeh", "CrowdCompass, Inc."]
-  s.date = %q{2011-05-25}
+  s.date = %q{2011-05-27}
   s.description = %q{A wrapper to make automatic sanitization of incoming data easier. Uses the sanitize gem and works in both plain Ruby and Rails projects.}
   s.email = %q{matthew.boeh@gmail.com}
   s.extra_rdoc_files = [
