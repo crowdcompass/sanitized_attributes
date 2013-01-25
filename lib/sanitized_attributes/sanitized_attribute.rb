@@ -6,7 +6,9 @@ module SanitizedAttributes; class SanitizedAttribute
   end
 
   def sanitize(content)
-    Sanitize.clean("<SPURIOUS-TOPLEVEL>" + content + "</SPURIOUS-TOPLEVEL>", sanitize_config).gsub(%r{</?SPURIOUS-TOPLEVEL>}, "")
+    if content
+      Sanitize.clean("<SPURIOUS-TOPLEVEL>" + content + "</SPURIOUS-TOPLEVEL>", sanitize_config).gsub(%r{</?SPURIOUS-TOPLEVEL>}, "")
+    end
   end
 
   def define_ar_writer_method(klass)
