@@ -7,7 +7,9 @@ module SanitizedAttributes; class SanitizedAttribute
 
   def sanitize(content)
     if content
-      Sanitize.clean("<SPURIOUS-TOPLEVEL>" + content + "</SPURIOUS-TOPLEVEL>", sanitize_config).gsub(%r{</?SPURIOUS-TOPLEVEL>}, "")
+      Sanitize.fragment(content, sanitize_config).
+        # equivalent of squish, which Sanitize used to do
+        gsub(/\s+/, ' ').sub(/^\s/, '').sub(/\s$/, '')
     end
   end
 
