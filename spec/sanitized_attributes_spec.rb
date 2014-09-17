@@ -11,7 +11,7 @@ describe "SanitizedAttributes" do
     SanitizedAttributes.add_option(:no_empties) do |env, forbidden_empties|
       if env[:node].content.empty?
         if forbidden_empties.include?(env[:node_name])
-          {:node => Nokogiri::XML::Text.new("", env[:node].document)}
+          env[:node].unlink
         end
       end
     end
@@ -28,6 +28,7 @@ describe "SanitizedAttributes" do
       nil
     end
     SanitizedAttributes.add_profile(:default, :gsub => { "\r" => "" })
+    SanitizedAttributes.add_profile(:default, :gsub => { "**" => "_" })
     SanitizedAttributes.add_profile(:quotes_only, :elements => %w[blockquote])
   end
 
@@ -47,10 +48,10 @@ describe "SanitizedAttributes" do
     end
     obj = @klass.new
     obj.orz = "<a>Orz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p></p>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
-    SanitizedAttributes.add_profile(:default, Sanitize::Config::BASIC.merge(:no_empties => %w[p]))
+    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p>*campers*. </p><p></p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
+    SanitizedAttributes.add_profile(:default, Sanitize::Config.merge(Sanitize::Config::BASIC, :no_empties => %w[p]))
     obj.orz = "<a>Orz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like *campers*. Orz <b>are just</b> Orz. <p>- Orz</p></a>"
+    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p>*campers*. </p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
   end
 
   it "sanitizes attributes with custom options and profiles" do
@@ -61,7 +62,7 @@ describe "SanitizedAttributes" do
     obj = @klass.new
     obj.vux = "<blockquote>Our special today is <b>particle fragmentation!</b></blockquote> - VUX"
     obj.vux.should == "<blockquote>Our special today is particle fragmentation!</blockquote> - VUX"
-    obj.orz = "\r\nOrz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>\r\nare just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "\nOrz are not *many bubbles* like *campers*. Orz \nare just Orz. <p>- Orz</p>"
+    obj.orz = "Orz are not *many bubbles* like **campers**. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p>"
+    obj.orz.should == "Orz are not *many bubbles* like _campers_. Orz are just Orz. <p>- Orz</p>"
   end
 end
