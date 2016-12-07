@@ -18,7 +18,7 @@ module SanitizedAttributes; class SanitizedAttribute
   def define_ar_writer_method(klass)
     this = self
     attr_name = @attr_name
-    if klass.instance_methods.include?("#{attr_name}=")
+    if klass.instance_methods.include?("#{attr_name}=".to_sym)
       klass.send(:define_method, "#{attr_name}_with_sanitization=") {|value|
         send(:"#{attr_name}_without_sanitization=", this.sanitize(value))
       }
