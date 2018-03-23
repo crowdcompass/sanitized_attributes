@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
 
   s.specification_version = 3
   s.add_development_dependency(%q<rspec>, ["~> 3.3.0"])
-  s.add_runtime_dependency(%q<sanitize>, ["~> 2.0.0"])
+  s.add_development_dependency(%q<pry>)
+  s.add_runtime_dependency(%q<sanitize>, ["~> 4.6.4"])
 end
 
