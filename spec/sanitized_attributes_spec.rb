@@ -47,10 +47,10 @@ describe "SanitizedAttributes" do
     end
     obj = @klass.new
     obj.orz = "<a>Orz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p></p>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
+    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p>*campers*. </p><p></p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
     SanitizedAttributes.add_profile(:default, Sanitize::Config::BASIC.merge(:no_empties => %w[p]))
     obj.orz = "<a>Orz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>are just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like *campers*. Orz <b>are just</b> Orz. <p>- Orz</p></a>"
+    obj.orz.should == "<a rel=\"nofollow\">Orz are not *many bubbles* like <p>*campers*. </p>Orz <b>are just</b> Orz. <p>- Orz</p></a>"
   end
 
   it "sanitizes attributes with custom options and profiles" do
@@ -62,6 +62,6 @@ describe "SanitizedAttributes" do
     obj.vux = "<blockquote>Our special today is <b>particle fragmentation!</b></blockquote> - VUX"
     obj.vux.should == "<blockquote>Our special today is particle fragmentation!</blockquote> - VUX"
     obj.orz = "\r\nOrz are not *many bubbles* like <p/>*campers*. <p></p>Orz <b>\r\nare just</b> Orz. <p>- Orz</p>"
-    obj.orz.should == "\nOrz are not *many bubbles* like *campers*. Orz\nare just Orz. <p>- Orz</p>"
+    obj.orz.should == "\nOrz are not *many bubbles* like <p>*campers*. </p>Orz\nare just Orz. <p>- Orz</p>"
   end
 end
